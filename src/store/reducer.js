@@ -3,7 +3,8 @@ import Actions from './actions';
 
 const initState = {
     identity: '',
-    isRoomHost: false
+    isRoomHost: false,
+    connectOnlyWithAudio: false
 };
 
 const reducer = (state = initState, action) => {
@@ -13,6 +14,11 @@ const reducer = (state = initState, action) => {
                 ...state,
                 isRoomHost: action.isRoomHost,
             };
+        case Actions.SET_CONNECT_ONLY_WITH_AUDIO:
+            return {
+                ...state,
+                connectOnlyWithAudio: action.onlyWithAudio,
+            }
         default:
             return state;
     }
