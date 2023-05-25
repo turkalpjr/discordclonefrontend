@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import JoinRoomInputs from './JoinRoomInputs';
 import { connect } from 'react-redux';
 import OnlyWithAudioCheckbox from './OnlyWithAudioCheckbox';
-import { setConnectOnlyWithAudio } from '../store/actions';
+import { setConnectOnlyWithAudio ,setIdentity,setRoomId,} from '../store/actions';
 import ErrorMessage from './ErrorMessage';
 import JoinRoomButtons from './JoinRoomButtons';
 import { useNavigate } from 'react-router-dom';
 import {getRoomExists} from '../utils/api';
 
 const JoinRoomContent = (props) => {
-    const { isRoomHost, setConnectOnlyWithAudio, connectOnlyWithAudio } = props;
+    const { isRoomHost, setConnectOnlyWithAudio, connectOnlyWithAudio,setIdentityAction,setRoomIdAction } = props;
     const [roomIdValue, setRoomIdValue] = useState('');
     const [nameValue, setNameValue] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
 
     const handleJoinRoom = async () => {
+        setIdentityAction(nameValue);
         if (isRoomHost) {
             createRoom();
         } else {
@@ -32,6 +33,7 @@ const JoinRoomContent = (props) => {
             } else {
                 //join a room!
                 //save in our redux store meeting id which was provider by the user who would like to join
+                setRoomIdAction(roomIdValue);
                 navigate('/room')
             }
         } else {
@@ -62,7 +64,10 @@ const mapStoreStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        setConnectOnlyWithAudio: (onlyWithAudio) => dispatch(setConnectOnlyWithAudio(onlyWithAudio))
+        setConnectOnlyWithAudio: (onlyWithAudio) => dispatch(setConnectOnlyWithAudio(onlyWithAudio)),
+        setIdentityAction:(identity)=>dispatch(setIdentity(identity)),
+        setRoomIdAction:(roomId)=>dispatch(setRoomId(roomId)),
+
     }
 }
 export default connect(mapStoreStateToProps, mapActionsToProps)(JoinRoomContent);
