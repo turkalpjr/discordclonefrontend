@@ -3,7 +3,8 @@ const Actions = {
     SET_CONNECT_ONLY_WITH_AUDIO: 'SET_CONNECT_ONLY_WITH_AUDIO',
     SET_IDENTITY: 'SET_IDENTITY',
     SET_ROOM_ID: 'SET_ROOM_ID',
-    SET_SHOW_OVERLAY: 'SET_SHOW_OVERLAY'
+    SET_SHOW_OVERLAY: 'SET_SHOW_OVERLAY',
+    SET_PARTICIPANTS: 'SET_PARTICIPANTS'
 };
 
 export const setIsRoomHost = (isRoomHost) => {
@@ -41,4 +42,10 @@ export const setShowOverlay = (showOverlay) => {
     }
 }
 
+export const setParticipants = (participants) => {
+    return {
+        type:Actions.SET_PARTICIPANTS,
+        participants
+    };
+};
 export default Actions;
