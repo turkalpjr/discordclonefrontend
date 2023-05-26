@@ -2,6 +2,7 @@
 import { setShowOverlay } from "../store/actions";
 import store from '../store/store';
 import * as wss from './wss';
+import Peer from 'simple-peer';
 const defaultConstraints = {
     audio: true,
     video: true
@@ -20,7 +21,7 @@ export const getLocalPreviewAndInitRoomConnection = async (
         showLocalVideoPreview(localStream);
         //dispatch an action to hide overlay
         store.dispatch(setShowOverlay(false));
-        isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom( identity,roomId);
+        isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom(identity, roomId);
     }).catch(err => {
         console.log('ERROR OCCURED WHEN TRYING TO GET ACCESS TO LOCAL STREAM');
         console.log(err);
@@ -31,6 +32,12 @@ const showLocalVideoPreview = (stream) => {
     //show local video preview    
 }
 
-export const prepareNewPeerConnection=(connUserSocketId,isInitiator)=>{
-    
+let peers = {};
+
+const getConfiguration =()=>{
+    ///64 devam....
+}
+
+export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
+    const configuration = getConfiguration();
 }
