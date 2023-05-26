@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
-import store from '../store/store';
 import { setRoomId,setParticipants } from '../store/actions';
+import store from '../store/store';
+import * as webRTCHandler from './webRTCHandler';
 const SERVER = 'http://localhost:5002'
 let socket = null;
 export const connectWithSocketIOServer = () => {
@@ -19,6 +20,10 @@ export const connectWithSocketIOServer = () => {
         store.dispatch(setParticipants(connectedUsers));
     })
 
+    socket.on('conn-prepare',(data)=>{
+        const{connUserSocketId}=data;
+        webRTCHandler.prepareNewPeerConnection(connUserSocketId,false);
+    });
 };
 
 
