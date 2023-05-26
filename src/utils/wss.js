@@ -8,3 +8,22 @@ export const connectWithSocketIOServer = () => {
         console.log(socket.id);
     });
 };
+
+
+export const createNewRoom=(identity)=>{
+   //emit an event to server that we could like to create new room
+   const data= {
+     identity
+   };
+   socket.emit('create-new-room',data)
+}
+
+export const joinRoom=(identity,roomId)=>{
+    // emit an event to server that we would to join a room
+    const data= {
+        roomId,
+        identity
+    }
+    socket.emit('join-room',data);
+}
+
