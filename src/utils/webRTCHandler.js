@@ -30,3 +30,7 @@ export const getLocalPreviewAndInitRoomConnection = async (
 const showLocalVideoPreview = (stream) => {
     //show local video preview    
 }
+
+export const prepareNewPeerConnection=(connUserSocketId,isInitiator)=>{
+    
+}
