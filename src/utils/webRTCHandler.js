@@ -5,8 +5,11 @@ import * as wss from './wss';
 import Peer from 'simple-peer';
 const defaultConstraints = {
     audio: true,
-    video: true
-}
+    video: {
+        width: "480",
+        height: "360"
+    },
+};
 
 let localStream;
 
@@ -74,6 +77,23 @@ export const handleSignalingData = (data) => {
 }
 
 
+export const removePeerConnection = (data) => {
+    const { socketId } = data;
+    const videoContainer = document.getElementById(socketId);
+    const videoEl = document.getElementById(`${socketId}-video`);
+    if (videoContainer && videoEl) {
+        const tracks = videoEl.srcObject.getTracks();
+        tracks.forEach(t => tracks.stop());
+        videoEl.srcObject = null;
+        videoContainer.removeChild(videoEl);
+        videoContainer.parentNode.removeChild(videoContainer);
+        if (peers[socketId]) {
+            peers[socketId].destroy();
+        }
+        delete peers[socketId];
+    }
+};
+
 ///////////////// UI VİDEOS ///////////////////////////////////
 const showLocalVideoPreview = (stream) => {
     const videosContainer = document.getElementById('videos_portal');
@@ -94,19 +114,28 @@ const showLocalVideoPreview = (stream) => {
 
 const addStream = (stream, connUserSocketId) => {
     //display incoming stream
-    const videosContainer= document.getElementById('videos_portal');
+    const videosContainer = document.getElementById('videos_portal');
     const videoContainer = document.createElement('div');
-    videoContainer.id= connUserSocketId;
+    videoContainer.id = connUserSocketId;
 
     videoContainer.classList.add('video_track_container');
     const videoElement = document.createElement('video');
     videoElement.autoplay = true;
     videoElement.srcObject = stream;
-    videoElement.id=`${connUserSocketId}-video`;
+    videoElement.id = `${connUserSocketId}-video`;
 
     videoElement.onloadedmetadata = () => {
         videoElement.play();
     }
+
+    videoElement.addEventListener('click', () => {
+        if (videoElement.classList.contains('full_screen')) {
+            videoElement.classList.remove("full_screen");
+        } else {
+            videoElement.classList.add('full_screen');
+        }
+    });
+
     videoContainer.appendChild(videoElement);
     videosContainer.appendChild(videoContainer);
 };
