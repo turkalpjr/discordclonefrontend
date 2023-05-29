@@ -1,21 +1,36 @@
 import React, { useState } from 'react';
-import SendMessageButton from '../../resources/images/'
+import SendMessageButton from "../../resources/images/sendMessageButton.svg";
+import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const NewMessage = () => {
     const [message, setMessage] = useState('');
 
-    const handleTextChange = (event) => { 
-        setMessage()
+    const handleTextChange = (event) => {
+        setMessage(event.target.value)
     };
-    const handleKeyPressed = (event) => { };
-    const sendMessage = () => { };
+    const handleKeyPressed = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            //send message to other users
+            sendMessage();
+        }
+    };
+
+    const sendMessage = () => {
+        if (message.length > 0) {
+            console.log('sending message to other users');
+            console.log(message);
+            //execute a function to send a message
+            setMessage('');
+        }
+    };
 
     return (
         <div className='new_message_container'>
             <input className='new_message_input'
                 value={message}
                 onChange={handleTextChange}
-                placeHolder='Type your message...'
+                placeholder='Type your message...'
                 type='text'
                 onKeyDown={handleKeyPressed}
             />
