@@ -1,25 +1,4 @@
 import React from 'react';
-const messages = [{
-    content: 'Hey',
-    identity: 'Marek',
-    messageCreatedByMe: true
-},
-{
-    content: 'hello',
-    identity: 'Marek',
-    messageCreatedByMe: true
-},
-{
-    content: 'hello marek',
-    identity: 'John',
-    messageCreatedByMe: false
-},
-{
-    content: 'hello everyone',
-    identity: 'Anna',
-    messageCreatedByMe: false
-}
-];
 
 const Message = ({ author, content, sameAuthor, messageCreatedByMe }) => {
     const alignClass = messageCreatedByMe ? 'message_align_right' : 'message_align_left';
