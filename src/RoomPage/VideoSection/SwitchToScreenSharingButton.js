@@ -20,12 +20,13 @@ const SwitchToScreenSharingButton = () => {
             }
             if (stream) {
                 setScreenSharingStream(stream);
+                webRTCHandler.toggleScreenShare(isScreenSharingActive,stream);
                 setIsScreenSharingActive(true);
                 // execute here function to switch the video track which we are sending to other users
             }
         }
         else {
-            //switch for  video track from camera
+            webRTCHandler.toggleScreenShare(isScreenSharingActive);
             setIsScreenSharingActive(false);
             //stop screen share stream
             screenSharingStream.getTracks().forEach((t) => t.stop());
