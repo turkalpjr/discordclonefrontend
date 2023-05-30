@@ -2,7 +2,7 @@ import { setShowOverlay, setMessages } from "../store/actions";
 import store from "../store/store";
 import * as wss from "./wss";
 import Peer from "simple-peer";
- 
+import { fetchTURNCredentials, getTurnIceServers } from "./turn";
 
 const defaultConstraints = {
   audio: true,
@@ -25,7 +25,7 @@ export const getLocalPreviewAndInitRoomConnection = async (
   roomId = null,
   onlyAudio
 ) => {
- 
+  await fetchTURNCredentials();
 
   const constraints = onlyAudio ? onlyAudioConstraints : defaultConstraints;
 
@@ -55,9 +55,28 @@ let peers = {};
 let streams = [];
 
 const getConfiguration = () => {
- 
+  const turnIceServers = getTurnIceServers();
 
-  
+  if (turnIceServers) {
+    return {
+      iceServers: [
+        {
+          urls: "stun:stun.l.google.com:19302",
+        },
+        ...turnIceServers,
+      ],
+    };
+  } else {
+    console.warn("Using only STUN server");
+    return {
+      iceServers: [
+        {
+          urls: "stun:stun.l.google.com:19302",
+        },
+      ],
+    };
+  }
+};
 
 const messengerChannel = "messenger";
 
