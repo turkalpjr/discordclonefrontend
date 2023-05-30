@@ -18,9 +18,7 @@ const NewMessage = () => {
 
     const sendMessage = () => {
         if (message.length > 0) {
-            console.log('sending message to other users');
-            console.log(message);
-            //execute a function to send a message
+            webRTCHandler.sendMessageUsingDataChannel(message);
             setMessage('');
         }
     };
