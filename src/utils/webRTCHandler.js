@@ -61,7 +61,7 @@ const getConfiguration = () => {
     return {
       iceServers: [
         {
-          urls: "stun:stun.l.google.com:19302",
+          urls: "stun:stun.1und1.de:3478",
         },
         ...turnIceServers,
       ],
@@ -71,7 +71,7 @@ const getConfiguration = () => {
     return {
       iceServers: [
         {
-          urls: "stun:stun.l.google.com:19302",
+          urls: "stun:stun.1und1.de:3478",
         },
       ],
     };
