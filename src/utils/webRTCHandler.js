@@ -1,6 +1,7 @@
 import { setShowOverlay, setMessages } from "../store/actions";
 import store from "../store/store";
 import * as wss from "./wss";
+import * as recordingUtils from "./recordingUtils";
 import Peer from "simple-peer";
 import { fetchTURNCredentials, getTurnIceServers } from "./turn";
 
@@ -18,6 +19,18 @@ const onlyAudioConstraints = {
 };
 
 let localStream;
+
+export const ReturnLocalStream = () => {
+  return localStream;
+};
+
+export const toggleCamera = (isDisabled) => {
+  localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
+};
+
+export const  handleRecordButtonPressed=(boolVal)=>{
+  boolVal==true? recordingUtils.stopRecording():recordingUtils.startRecording();
+}
 
 export const getLocalPreviewAndInitRoomConnection = async (
   isRoomHost,
@@ -223,9 +236,6 @@ export const toggleMic = (isMuted) => {
   localStream.getAudioTracks()[0].enabled = isMuted ? true : false;
 };
 
-export const toggleCamera = (isDisabled) => {
-  localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
-};
 
 export const toggleScreenShare = (
   isScreenSharingActive,
