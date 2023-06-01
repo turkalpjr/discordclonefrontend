@@ -1,5 +1,6 @@
 import React from "react";
 import CameraButton from "./CameraButton";
+import RecordButton from "./RecordButton";
 import LeaveRoomButton from "./LeaveRoomButton";
 import MicButton from "./MicButton";
 import SwitchToScreenSharingButton from "./SwitchToScreenSharingButton";
@@ -12,6 +13,7 @@ const VideoButtons = (props) => {
     <div className="video_buttons_container">
       <MicButton />
       {!connectOnlyWithAudio && <CameraButton />}
+      {!connectOnlyWithAudio && <RecordButton />}
       <LeaveRoomButton />
       {!connectOnlyWithAudio && <SwitchToScreenSharingButton />}
     </div>
