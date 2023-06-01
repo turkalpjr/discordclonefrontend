@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverApi = "http://192.168.1.17:5002/api";
+const serverApi = "http://test.wease.io:5002/api";
 
 export const getRoomExists = async (roomId) => {
   const response = await axios.get(`${serverApi}/room-exists/${roomId}`);
